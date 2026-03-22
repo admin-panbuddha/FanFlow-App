@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Workafé — Discover the best cafés to work from. Check in, earn rewards, and find your perfect workspace.">
+
+  <title>Workafé — Find Your Perfect Work Café</title>
+  <link rel="canonical" href="https://workafe-app-production.up.railway.app">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://workafe-app-production.up.railway.app">
+  <meta property="og:title" content="Workafé — Find Your Perfect Work Café">
+  <meta property="og:description" content="Discover work-friendly cafés near you. Check in, earn rewards, and find the perfect spot to be productive.">
+
+  <!-- Theme & PWA -->
+  <meta name="theme-color" content="#C8956C">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+
+  <!-- Leaflet Map -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+  <!-- QR Code Generator -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════
+       VIEW: HOME
+       ══════════════════════════════════════════════ -->
+  <div id="view-home" class="view active">
+    <nav class="navbar">
+      <div class="container nav-inner">
+        <a href="/" class="nav-brand"><span class="brand-gradient">Workafé</span></a>
+        <button class="nav-icon-btn" id="notif-btn">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="notif-dot" id="notif-dot" style="display:none"></span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="home-content">
+      <!-- Points Banner -->
+      <div class="container">
+        <div class="points-banner" id="points-banner">
+          <div class="points-left">
+            <span class="material-symbols-outlined points-icon">star</span>
+            <span class="points-value" id="home-points">0</span>
+            <span class="points-label">pts</span>
+          </div>
+          <span class="points-level" id="home-level">Explorer</span>
+        </div>
+      </div>
+
+      <!-- Event Hero -->
+      <section class="container" id="event-hero-section">
+        <div id="event-hero" class="event-hero-card">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- Trending Deals -->
+      <section class="container section">
+        <div class="section-header">
+          <h2 class="section-title">Trending Now</h2>
+          <button class="see-all-btn" id="see-all-trending">See All</button>
+        </div>
+        <div class="trending-scroll" id="trending-deals">
+          <!-- Horizontal scroll cards populated by JS -->
+        </div>
+      </section>
+
+      <!-- Deals Near You -->
+      <section class="container section">
+        <div class="section-header">
+          <h2 class="section-title">Deals Near You</h2>
+          <button class="see-all-btn" id="see-all-deals">See All</button>
+        </div>
+        <div class="deals-list" id="nearby-deals">
+          <!-- Deal cards populated by JS -->
+        </div>
+      </section>
+
+      <div class="spacer-bottom"></div>
+    </div>
+
+    <nav class="bottom-nav" id="nav-home">
+      <button class="bottom-nav-btn active" data-nav="home">
+        <span class="material-symbols-outlined">home</span>
+        <span class="nav-label">Home</span>
+      </button>
+      <button class="bottom-nav-btn" data-nav="map">
+        <span class="material-symbols-outlined">map</span>
+        <span class="nav-label">Map</span>
+      </button>
+      <button class="bottom-nav-btn" data-nav="deals">
+        <span class="material-symbols-outlined">local_offer</span>
+        <span class="nav-label">Deals</span>
+      </button>
+      <button class="bottom-nav-btn" data-nav="saved">
+        <span class="material-symbols-outlined">bookmark</span>
+        <span class="nav-label">Saved</span>
+      </button>
+      <button class="bottom-nav-btn" data-nav="rewards">
+        <span class="material-symbols-outlined">emoji_events</span>
+        <span class="nav-label">Rewards</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       VIEW: MAP
+       ══════════════════════════════════════════════ -->
+  <div id="view-map" class="view">
+    <nav class="navbar">
+      <div class="container nav-inner">
+        <a class="nav-brand"><span class="brand-gradient">Workafé</span></a>
+        <span class="nav-subtitle">Deals Map</span>
+      </div>
+    </nav>
+
+    <div id="map-container" class="map-container"></div>
+
+    <!-- Map filter chips -->
+    <div class="map-filters" id="map-filters">
+      <button class="chip active" data-filter="all">All</button>
+      <button class="chip" data-filter="food">Food</button>
+      <button class="chip" data-filter="drinks">Drinks</button>
+      <button class="chip" data-filter="activities">Activities</button>
+      <button class="chip" data-filter="shopping">Shopping</button>
+    </div>
+
+    <!-- Map deal preview card (shows when pin tapped) -->
+    <div class="map-preview-card" id="map-preview" style="display:none">
+      <div class="map-preview-inner">
+        <div class="map-preview-badge" id="map-preview-badge"></div>
+        <div class="map-preview-info">
+          <h3 id="map-preview-name"></h3>
+          <p id="map-preview-hook"></p>
+          <div class="map-preview-meta">
+            <span id="map-preview-distance"></span>
+            <span id="map-preview-vibe"></span>
+          </div>
+        </div>
+        <button class="map-preview-action" id="map-preview-go">View</button>
+      </div>
+    </div>
+
+    <nav class="bottom-nav">
+      <button class="bottom-nav-btn" data-nav="home">
+        <span class="material-symbols-outlined">home</span>
+        <span class="nav-label">Home</span>
+      </button>
+      <button class="bottom-nav-btn active" data-nav="map">
+        <span class="material-symbols-outlined">map</span>
+        <span class="nav-label">Map</span>
+      </button>
+      <button class="bottom-nav-btn" data-nav="deals">
+        <span class="material-symbols-outlined">local_offer</span>
+        <span class="nav-label">Deals</span>
+      </button>
+      <button class="bottom-nav-btn" data-nav="saved">
+        <span class="material-symbols-outlined">bookmark</span>
+        <span class="nav-label">Saved</span>
+      </button>
+      <button class="bottom-nav-btn" data-nav="rewards">
+        <span class="material-symbols-outlined">emoji_events</span>
+        <span class="nav-label">Rewards</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       VIEW: DEALS BROWSE (with category filters)
+       ══════════════════════════════════════════════ -->
+  <div id="view-deals" class="view">
+    <nav class="navbar">
+      <div class="container nav-inner">
+        <a class="nav-brand"><span class="brand-gradient">Workafé</span></a>
+        <span class="nav-subtitle" id="deals-event-name">Deals</span>
+      </div>
+    </nav>
+
+    <!-- Category filter tabs -->
+    <nav class="tab-bar" id="tab-bar">
+      <button class="tab-btn active" data-tab="all">
+        <span class="material-symbols-outlined">explore</span>
+        <span class="tab-label">All</span>
+      </button>
+      <button class="tab-btn" data-tab="food">
+        <span class="material-symbols-outlined">restaurant</span>
+        <span class="tab-label">Food</span>
+      </button>
+      <button class="tab-btn" data-tab="drinks">
+        <span class="material-symbols-outlined">local_bar</span>
+        <span class="tab-label">Drinks</span>
+      </button>
+      <button class="tab-btn" data-tab="activities">
+        <span class="material-symbols-outlined">celebration</span>
+        <span class="tab-label">Activities</span>
+      </button>
+      <button class="tab-btn" data-tab="shopping">
+        <span class="material-symbols-outlined">shopping_bag</span>
+        <span class="tab-label">Shopping</span>
+      </button>
+    </nav>
+
+    <div class="deals-content" id="deals-content">
+      <!-- Populated by JS -->
+    </div>
+
+    <nav class="bottom-nav">
+      <button class="bottom-nav-btn" data-nav="home">
+        <span class="material-symbols-outlined">home</span>
+        <span class="nav-label">Home</span>
+      </button>
+      <button class="bottom-nav-btn" data-nav="map">
+        <span class="material-symbols-outlined">map</span>
+        <span class="nav-label">Map</span>
+      </button>
+      <button class="bottom-nav-btn active" data-nav="deals">
+        <span class="material-symbols-outlined">local_offer</span>
+        <span class="nav-label">Deals</span>
+      </button>
+      <button class="bottom-nav-btn" data-nav="saved">
+        <span class="material-symbols-outlined">bookmark</span>
+        <span class="nav-label">Saved</span>
+      </button>
+      <button class="bottom-nav-btn" data-nav="rewards">
+        <span class="material-symbols-outlined">emoji_events</span>
+        <span class="nav-label">Rewards</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       VIEW: DEAL DETAIL
+       ══════════════════════════════════════════════ -->
+  <div id="view-detail" class="view">
+    <nav class="navbar">
+      <div class="container nav-inner">
+        <button class="back-btn" id="detail-back">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <span class="nav-subtitle" id="detail-title">Deal</span>
+        <button class="nav-icon-btn" id="detail-save-btn">
+          <span class="material-symbols-outlined" id="detail-save-icon">bookmark_border</span>
+        </button>
+      </div>
+    </nav>
+    <div id="detail-content" class="detail-content">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       VIEW: CLAIM SUCCESS (QR code + redemption)
+       ══════════════════════════════════════════════ -->
+  <div id="view-success" class="view">
+    <div class="success-screen">
+      <div class="success-header">
+        <button class="back-btn" id="success-close">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div class="success-body">
+        <div class="success-check">
+          <span class="material-symbols-outlined">check_circle</span>
+        </div>
+        <h2 class="success-title">Deal Claimed!</h2>
+        <p class="success-subtitle" id="success-deal-name"></p>
+        <p class="success-instruction">Show this QR code or claim code to the staff to redeem your deal.</p>
+
+        <div class="qr-container" id="qr-container"></div>
+
+        <div class="success-code-display" id="success-code">PF-XXXXXX</div>
+        <p class="success-points" id="success-points">+10 points earned!</p>
+
+        <div class="success-actions">
+          <button class="btn btn-secondary" id="success-directions">
+            <span class="material-symbols-outlined">directions</span>
+            Get Directions
+          </button>
+          <button class="btn btn-primary" id="success-done">
+            <span class="material-symbols-outlined">local_offer</span>
+            More Deals
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       VIEW: SAVED DEALS
+       ══════════════════════════════════════════════ -->
+  <div id="view-saved" class="view">
+    <nav class="navbar">
+      <div class="container nav-inner">
+        <a class="nav-brand"><span class="brand-gradient">Workafé</span></a>
+        <span class="nav-subtitle">Saved Deals</span>
+      </div>
+    </nav>
+
+    <div class="saved-content" id="saved-content">
+      <!-- Tabs: Saved / Active Claims -->
+      <div class="saved-tabs">
+        <button class="saved-tab-btn active" data-saved-tab="bookmarks">Bookmarked</button>
+        <button class="saved-tab-btn" data-saved-tab="claims">My Claims</button>
+      </div>
+      <div id="saved-list" class="saved-list">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+    <nav class="bottom-nav">
+      <button class="bottom-nav-btn" data-nav="home">
+        <span class="material-symbols-outlined">home</span>
+        <span class="nav-label">Home</span>
+      </button>
+      <button class="bottom-nav-btn" data-nav="map">
+        <span class="material-symbols-outlined">map</span>
+        <span class="nav-label">Map</span>
+      </button>
+      <button class="bottom-nav-btn" data-nav="deals">
+        <span class="material-symbols-outlined">local_offer</span>
+        <span class="nav-label">Deals</span>
+      </button>
+      <button class="bottom-nav-btn active" data-nav="saved">
+        <span class="material-symbols-outlined">bookmark</span>
+        <span class="nav-label">Saved</span>
+      </button>
+      <button class="bottom-nav-btn" data-nav="rewards">
+        <span class="material-symbols-outlined">emoji_events</span>
+        <span class="nav-label">Rewards</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       VIEW: REWARDS
+       ══════════════════════════════════════════════ -->
+  <div id="view-rewards" class="view">
+    <nav class="navbar">
+      <div class="container nav-inner">
+        <a class="nav-brand"><span class="brand-gradient">Workafé</span></a>
+        <span class="nav-subtitle">Rewards</span>
+      </div>
+    </nav>
+
+    <div class="rewards-content">
+      <div class="container">
+        <!-- Points Card -->
+        <div class="rewards-card">
+          <div class="rewards-ring-container">
+            <svg class="rewards-ring" viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="52" fill="none" stroke="var(--surface-high)" stroke-width="8"/>
+              <circle cx="60" cy="60" r="52" fill="none" stroke="var(--primary)" stroke-width="8"
+                stroke-dasharray="327" stroke-dashoffset="327" stroke-linecap="round" id="rewards-ring-progress"/>
+            </svg>
+            <div class="rewards-ring-inner">
+              <span class="rewards-points-big" id="rewards-points">0</span>
+              <span class="rewards-points-label">points</span>
+            </div>
+          </div>
+          <h2 class="rewards-level" id="rewards-level">Explorer</h2>
+          <p class="rewards-next" id="rewards-next">50 points to Regular</p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="rewards-stats">
+          <div class="reward-stat">
+            <span class="reward-stat-value" id="stat-claims">0</span>
+            <span class="reward-stat-label">Claimed</span>
+          </div>
+          <div class="reward-stat">
+            <span class="reward-stat-value" id="stat-redeemed">0</span>
+            <span class="reward-stat-label">Redeemed</span>
+          </div>
+          <div class="reward-stat">
+            <span class="reward-stat-value" id="stat-saved">0</span>
+            <span class="reward-stat-label">Saved</span>
+          </div>
+        </div>
+
+        <!-- Activity Feed -->
+        <h3 class="section-title-sm">Recent Activity</h3>
+        <div class="activity-feed" id="activity-feed">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+      <div class="spacer-bottom"></div>
+    </div>
+
+    <nav class="bottom-nav">
+      <button class="bottom-nav-btn" data-nav="home">
+        <span class="material-symbols-outlined">home</span>
+        <span class="nav-label">Home</span>
+      </button>
+      <button class="bottom-nav-btn" data-nav="map">
+        <span class="material-symbols-outlined">map</span>
+        <span class="nav-label">Map</span>
+      </button>
+      <button class="bottom-nav-btn" data-nav="deals">
+        <span class="material-symbols-outlined">local_offer</span>
+        <span class="nav-label">Deals</span>
+      </button>
+      <button class="bottom-nav-btn" data-nav="saved">
+        <span class="material-symbols-outlined">bookmark</span>
+        <span class="nav-label">Saved</span>
+      </button>
+      <button class="bottom-nav-btn active" data-nav="rewards">
+        <span class="material-symbols-outlined">emoji_events</span>
+        <span class="nav-label">Rewards</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       VIEW: NOTIFICATIONS
+       ══════════════════════════════════════════════ -->
+  <div id="view-notifs" class="view">
+    <nav class="navbar">
+      <div class="container nav-inner">
+        <button class="back-btn" id="notifs-back">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <span class="nav-subtitle">Notifications</span>
+      </div>
+    </nav>
+    <div class="container notifs-content" id="notifs-list">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+  <!-- Toast container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+/* ═══════════════════════════════════════════════════════════
+   WORKAFÉ — Component overrides (kept for cache compat)
+   Main styles are now in main.css
+   ═══════════════════════════════════════════════════════════ */
+
+/* Leaflet popup overrides for dark theme */
+.leaflet-popup-content-wrapper {
+  background: var(--surface-low);
+  color: var(--on-surface);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+.leaflet-popup-tip { background: var(--surface-low); }
+
+/* Leaflet zoom controls */
+.leaflet-control-zoom a {
+  background: var(--surface-low) !important;
+  color: var(--on-surface) !important;
+  border-color: var(--outline-variant) !important;
+}
+
+/* QR code container styles */
+#qr-container canvas,
+#qr-container img {
+  border-radius: var(--radius-md);
+  margin: 0 auto;
+}
+
+/* Fix for home-content scrolling with bottom nav */
+.home-content {
+  padding-bottom: calc(80px + var(--safe-bottom));
+}

@@ -1,0 +1,19 @@
+{
+  "name": "workafe-app",
+  "version": "1.0.0",
+  "description": "Discover work-friendly cafés, check in, earn rewards. The remote worker's best friend.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "stripe": "^14.14.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

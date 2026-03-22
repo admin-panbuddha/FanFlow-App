@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Workafé AI Marketing — Done-for-you social media marketing for café owners. $50/month.">
+  <title>AI Marketing for Your Café — Workafé</title>
+  <link rel="canonical" href="https://workafe-app-production.up.railway.app/vendor-marketing">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+
+  <style>
+    :root {
+      --primary:    #C8956C;
+      --primary-lt: #E8C5A0;
+      --accent:     #4A8C6A;
+      --gold:       #D4A853;
+      --bg:         #1A1510;
+      --surface:    #2A2319;
+      --surface-hi: #352D21;
+      --text:       #F5EDE4;
+      --muted:      #A89A8A;
+      --radius:     16px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Manrope', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(26,21,16,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200,149,108,0.12);
+      padding: 14px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-brand { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 800; color: var(--primary); text-decoration: none; }
+    .nav-back { display: flex; align-items: center; gap: 6px; color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 600; }
+    .nav-back span { font-size: 18px; }
+
+    /* ── CONTAINER ── */
+    .container { max-width: 480px; margin: 0 auto; padding: 0 20px; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 48px 20px 40px;
+      text-align: center;
+      background: linear-gradient(180deg, #2A2319 0%, var(--bg) 100%);
+      border-bottom: 1px solid rgba(200,149,108,0.1);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(212,168,83,0.15); border: 1px solid rgba(212,168,83,0.3);
+      color: var(--gold); font-size: 12px; font-weight: 700;
+      padding: 5px 12px; border-radius: 100px; margin-bottom: 20px;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .hero-badge span { font-size: 14px; }
+    .hero h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 30px; font-weight: 800; line-height: 1.2;
+      margin-bottom: 14px;
+    }
+    .hero h1 em { font-style: normal; color: var(--primary); }
+    .hero p { color: var(--muted); font-size: 16px; margin-bottom: 28px; line-height: 1.7; }
+    .price-badge {
+      display: inline-flex; flex-direction: column; align-items: center;
+      background: var(--surface); border: 1px solid rgba(200,149,108,0.2);
+      border-radius: var(--radius); padding: 14px 28px; margin-bottom: 24px;
+    }
+    .price-badge .price { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 36px; font-weight: 800; color: var(--primary); }
+    .price-badge .price-period { font-size: 13px; color: var(--muted); font-weight: 500; }
+    .hero-cta {
+      display: flex; flex-direction: column; gap: 12px;
+      max-width: 340px; margin: 0 auto;
+    }
+    .btn {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 14px 24px; border-radius: 12px; font-weight: 700; font-size: 15px;
+      cursor: pointer; border: none; text-decoration: none; transition: all 0.2s;
+    }
+    .btn-primary { background: var(--primary); color: var(--bg); }
+    .btn-primary:hover { background: var(--primary-lt); transform: translateY(-1px); }
+    .btn-outline { background: transparent; border: 1.5px solid rgba(200,149,108,0.35); color: var(--text); }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+    .btn span { font-size: 20px; }
+
+    /* ── HOW IT WORKS ── */
+    .section { padding: 40px 20px; }
+    .section-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 22px; font-weight: 800; margin-bottom: 8px; text-align: center;
+    }
+    .section-subtitle { color: var(--muted); font-size: 14px; text-align: center; margin-bottom: 28px; }
+
+    .steps { display: flex; flex-direction: column; gap: 0; }
+    .step {
+      display: flex; gap: 16px; align-items: flex-start;
+      position: relative; padding-bottom: 28px;
+    }
+    .step:last-child { padding-bottom: 0; }
+    .step-line {
+      position: absolute; left: 19px; top: 44px; bottom: 0;
+      width: 2px; background: rgba(200,149,108,0.15);
+    }
+    .step:last-child .step-line { display: none; }
+    .step-num {
+      flex-shrink: 0; width: 40px; height: 40px;
+      border-radius: 50%; border: 2px solid var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 800; color: var(--primary);
+      background: var(--surface);
+    }
+    .step-body h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .step-body p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+    /* ── WHAT YOU GET ── */
+    .features-grid { display: flex; flex-direction: column; gap: 12px; }
+    .feature-card {
+      background: var(--surface); border: 1px solid rgba(200,149,108,0.1);
+      border-radius: var(--radius); padding: 18px;
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .feature-icon {
+      flex-shrink: 0; width: 42px; height: 42px;
+      background: rgba(200,149,108,0.12); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .feature-icon span { font-size: 22px; color: var(--primary); }
+    .feature-body h3 { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+    .feature-body p { color: var(--muted); font-size: 13px; line-height: 1.5; }
+
+    /* ── AI PREVIEW CARD ── */
+    .ai-preview-section { padding: 0 20px 40px; }
+    .ai-preview-label {
+      font-size: 12px; font-weight: 700; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px;
+      text-align: center;
+    }
+    .ai-preview-card {
+      background: var(--surface-hi); border: 1px solid rgba(200,149,108,0.15);
+      border-radius: var(--radius); overflow: hidden;
+    }
+    .ai-preview-header {
+      background: rgba(200,149,108,0.08); padding: 12px 16px;
+      border-bottom: 1px solid rgba(200,149,108,0.1);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .ai-preview-header span { font-size: 18px; color: var(--primary); }
+    .ai-preview-header strong { font-size: 13px; font-weight: 700; }
+    .ai-preview-header small { font-size: 11px; color: var(--muted); margin-left: auto; }
+    .ai-preview-body { padding: 16px; }
+    .ai-post-type {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      background: rgba(74,140,106,0.15); color: var(--accent);
+      border-radius: 4px; padding: 2px 8px; margin-bottom: 10px;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .ai-caption { font-size: 14px; line-height: 1.7; color: var(--text); margin-bottom: 12px; }
+    .ai-caption em { font-style: normal; color: var(--primary); font-weight: 600; }
+    .ai-hashtags { font-size: 12px; color: var(--accent); line-height: 1.8; }
+    .ai-actions {
+      padding: 12px 16px; border-top: 1px solid rgba(200,149,108,0.1);
+      display: flex; gap: 8px;
+    }
+    .ai-action-btn {
+      flex: 1; padding: 9px 12px; border-radius: 8px; font-size: 12px; font-weight: 700;
+      cursor: pointer; border: none; display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .ai-action-approve { background: var(--accent); color: white; }
+    .ai-action-edit { background: rgba(200,149,108,0.12); color: var(--primary); }
+    .ai-action-reject { background: rgba(255,255,255,0.05); color: var(--muted); }
+    .ai-action-btn span { font-size: 14px; }
+
+    /* ── VALUE PROPS ── */
+    .value-grid { display: flex; flex-direction: column; gap: 10px; }
+    .value-row {
+      display: flex; align-items: flex-start; gap: 12px;
+      background: var(--surface); border-radius: 12px; padding: 14px 16px;
+    }
+    .value-icon { font-size: 22px; color: var(--gold); flex-shrink: 0; margin-top: 1px; }
+    .value-body strong { display: block; font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+    .value-body span { font-size: 13px; color: var(--muted); }
+
+    /* ── PRICING ── */
+    .pricing-card {
+      background: linear-gradient(135deg, #352D21 0%, #2A2319 100%);
+      border: 1.5px solid var(--primary); border-radius: 20px; padding: 28px 24px;
+      text-align: center; margin-bottom: 20px;
+    }
+    .pricing-plan { font-size: 12px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .pricing-price { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 52px; font-weight: 800; color: var(--primary); line-height: 1; }
+    .pricing-period { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+    .pricing-divider { height: 1px; background: rgba(200,149,108,0.15); margin: 20px 0; }
+    .pricing-features { list-style: none; text-align: left; margin-bottom: 24px; }
+    .pricing-features li {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 14px; padding: 7px 0; border-bottom: 1px solid rgba(200,149,108,0.07);
+    }
+    .pricing-features li:last-child { border-bottom: none; }
+    .pricing-features li span { font-size: 18px; color: var(--accent); flex-shrink: 0; }
+    .pricing-note { font-size: 12px; color: var(--muted); text-align: center; }
+    .pricing-note a { color: var(--primary); text-decoration: none; }
+
+    /* ── SIGN UP FORM ── */
+    .signup-section {
+      background: var(--surface); border: 1px solid rgba(200,149,108,0.15);
+      border-radius: 20px; padding: 28px 24px; margin: 0 20px 40px;
+    }
+    .signup-section h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+    .signup-section p { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+    .form-group { margin-bottom: 14px; }
+    .form-label { display: block; font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+    .form-input, .form-select, .form-textarea {
+      width: 100%; background: var(--surface-hi); border: 1.5px solid rgba(200,149,108,0.15);
+      border-radius: 10px; padding: 12px 14px; color: var(--text); font-family: 'Manrope', sans-serif;
+      font-size: 14px; outline: none; transition: border-color 0.2s;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--primary); }
+    .form-input::placeholder, .form-textarea::placeholder { color: var(--muted); opacity: 0.6; }
+    .form-select { appearance: none; cursor: pointer; }
+    .form-textarea { resize: vertical; min-height: 80px; }
+    .form-submit {
+      width: 100%; padding: 15px 24px; background: var(--primary); color: var(--bg);
+      border: none; border-radius: 12px; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px; font-weight: 800; cursor: pointer; transition: all 0.2s; margin-top: 8px;
+    }
+    .form-submit:hover { background: var(--primary-lt); transform: translateY(-1px); }
+    .form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .form-success {
+      display: none; text-align: center; padding: 20px 0;
+    }
+    .form-success .success-icon { font-size: 48px; color: var(--accent); display: block; margin-bottom: 12px; }
+    .form-success h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+    .form-success p { color: var(--muted); font-size: 14px; }
+
+    /* ── FAQ ── */
+    .faq-list { display: flex; flex-direction: column; gap: 8px; }
+    .faq-item {
+      background: var(--surface); border-radius: 12px;
+      border: 1px solid rgba(200,149,108,0.08); overflow: hidden;
+    }
+    .faq-q {
+      padding: 16px; font-weight: 700; font-size: 14px;
+      cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      list-style: none; user-select: none;
+    }
+    .faq-q::after { content: 'expand_more'; font-family: 'Material Symbols Outlined'; font-size: 20px; color: var(--muted); transition: transform 0.2s; flex-shrink: 0; }
+    .faq-item.open .faq-q::after { transform: rotate(180deg); }
+    .faq-a { padding: 0 16px 14px; color: var(--muted); font-size: 13px; line-height: 1.7; display: none; }
+    .faq-item.open .faq-a { display: block; }
+
+    /* ── FOOTER ── */
+    .footer {
+      padding: 28px 20px; border-top: 1px solid rgba(200,149,108,0.1);
+      text-align: center;
+    }
+    .footer-brand { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; color: var(--primary); font-size: 18px; margin-bottom: 6px; }
+    .footer-co { font-size: 11px; color: var(--muted); margin-bottom: 12px; }
+    .footer-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
+    .footer-links a { color: var(--muted); font-size: 12px; text-decoration: none; }
+    .footer-links a:hover { color: var(--primary); }
+    .footer-copy { font-size: 11px; color: var(--muted); opacity: 0.6; }
+
+    /* ── SECTION DIVIDER ── */
+    .divider {
+      height: 1px; background: rgba(200,149,108,0.08);
+      margin: 0 20px;
+    }
+
+    /* ── ANIMATED TYPING ── */
+    @keyframes blink { 50% { opacity: 0; } }
+    .cursor { display: inline-block; width: 2px; height: 1em; background: var(--primary); margin-left: 2px; vertical-align: text-bottom; animation: blink 1s step-end infinite; }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav class="nav">
+    <a href="/welcome.html" class="nav-back">
+      <span class="material-symbols-outlined">arrow_back</span>
+      Back
+    </a>
+    <a href="/" class="nav-brand">Workafé</a>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="hero-badge">
+      <span class="material-symbols-outlined">auto_awesome</span>
+      AI-Powered Marketing
+    </div>
+    <h1>Let AI do your<br><em>marketing for you</em></h1>
+    <p>We analyze your café, your local market, and your customers — then generate, schedule, and publish social media content every week. You just approve.</p>
+
+    <div class="price-badge">
+      <span class="price">$50</span>
+      <span class="price-period">per month · cancel anytime</span>
+    </div>
+
+    <div class="hero-cta">
+      <a href="#signup" class="btn btn-primary">
+        <span class="material-symbols-outlined">rocket_launch</span>
+        Start My Free Trial
+      </a>
+      <a href="#how-it-works" class="btn btn-outline">
+        See how it works
+      </a>
+    </div>
+  </div>
+
+  <!-- ── HOW IT WORKS ── -->
+  <section class="section" id="how-it-works">
+    <div class="container">
+      <p class="section-title">How it works</p>
+      <p class="section-subtitle">4 steps. You approve once. AI handles everything else.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-line"></div>
+          <div class="step-body">
+            <h3>Tell us about your café</h3>
+            <p>Your vibe, audience, what makes you special, and what promotions you're running in the app.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-line"></div>
+          <div class="step-body">
+            <h3>Connect your social accounts</h3>
+            <p>Connect Instagram and Facebook in under 2 minutes. We handle the posting — you stay in control.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-line"></div>
+          <div class="step-body">
+            <h3>Review AI-generated content</h3>
+            <p>Every week, we send you a batch of ready-to-publish posts. Approve, edit, or skip — takes 5 minutes.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-line"></div>
+          <div class="step-body">
+            <h3>Content posts automatically</h3>
+            <p>Approved content gets published on schedule. Promotions from your Workafé listing become social posts instantly.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── LIVE AI PREVIEW ── -->
+  <section class="ai-preview-section" style="padding-top:36px">
+    <div class="container">
+      <p class="ai-preview-label">Sample AI-generated post for your café</p>
+      <div class="ai-preview-card">
+        <div class="ai-preview-header">
+          <span class="material-symbols-outlined">auto_awesome</span>
+          <strong>AI Content Ready</strong>
+          <small>Ready for approval</small>
+        </div>
+        <div class="ai-preview-body">
+          <span class="ai-post-type">Instagram · Tuesday 9am</span>
+          <p class="ai-caption" id="ai-caption">
+            The best office in Vancouver has no desk required. ☕<br><br>
+            Pull up a chair, plug in, and let the espresso do its thing. Our corner window seats are claiming themselves all week — and your first pour-over is on us when you check in on <em>Workafé</em>.
+          </p>
+          <p class="ai-hashtags">#Vancouver #RemoteWork #WorkFromCafe #CoffeeShopVibes #WorkafeCafe #DigitalNomad #VancouverCoffee #WFH</p>
+        </div>
+        <div class="ai-actions">
+          <button class="ai-action-btn ai-action-approve">
+            <span class="material-symbols-outlined">check</span>
+            Approve
+          </button>
+          <button class="ai-action-btn ai-action-edit">
+            <span class="material-symbols-outlined">edit</span>
+            Edit
+          </button>
+          <button class="ai-action-btn ai-action-reject">
+            <span class="material-symbols-outlined">close</span>
+            Skip
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" style="margin-top:36px"></div>
+
+  <!-- ── WHAT YOU GET ── -->
+  <section class="section">
+    <div class="container">
+      <p class="section-title">What's included</p>
+      <p class="section-subtitle">Everything to grow your café's social presence — done.</p>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><span class="material-symbols-outlined">insights</span></div>
+          <div class="feature-body">
+            <h3>Market Analysis</h3>
+            <p>AI scans your local area — competitor cafés, trending content, seasonal opportunities — to craft posts that actually land.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><span class="material-symbols-outlined">campaign</span></div>
+          <div class="feature-body">
+            <h3>Weekly Content Batch</h3>
+            <p>4–6 ready-to-publish posts every week: captions, hashtags, posting schedule. Instagram and Facebook ready.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><span class="material-symbols-outlined">local_offer</span></div>
+          <div class="feature-body">
+            <h3>Promotion Sync</h3>
+            <p>Any deal or perk you run on Workafé automatically becomes social media content. Zero extra work on your end.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><span class="material-symbols-outlined">schedule</span></div>
+          <div class="feature-body">
+            <h3>Auto-Scheduling</h3>
+            <p>Posts are scheduled for peak engagement times. Once approved, they publish automatically — no late-night posting.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><span class="material-symbols-outlined">thumb_up</span></div>
+          <div class="feature-body">
+            <h3>Simple Approval Flow</h3>
+            <p>Review your weekly content in under 5 minutes. Approve all, edit one, or skip anything. You stay in control.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><span class="material-symbols-outlined">bar_chart</span></div>
+          <div class="feature-body">
+            <h3>Performance Reports</h3>
+            <p>Monthly report showing reach, engagement, and estimated check-in impact. Know what's working.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── VALUE PROPS ── -->
+  <section class="section">
+    <div class="container">
+      <p class="section-title">Why $50/month is a no-brainer</p>
+      <p class="section-subtitle">What you get back vs. what you spend.</p>
+
+      <div class="value-grid">
+        <div class="value-row">
+          <span class="material-symbols-outlined value-icon">schedule</span>
+          <div class="value-body">
+            <strong>10+ hours saved per month</strong>
+            <span>No more spending evenings thinking up captions or battling Instagram's algorithm.</span>
+          </div>
+        </div>
+        <div class="value-row">
+          <span class="material-symbols-outlined value-icon">people</span>
+          <div class="value-body">
+            <strong>More remote workers finding you</strong>
+            <span>Consistent posting keeps your café top-of-mind and searchable for Workafé users nearby.</span>
+          </div>
+        </div>
+        <div class="value-row">
+          <span class="material-symbols-outlined value-icon">trending_up</span>
+          <div class="value-body">
+            <strong>Promotions actually drive foot traffic</strong>
+            <span>AI posts your active deals to social media the same day — when remote workers are deciding where to go.</span>
+          </div>
+        </div>
+        <div class="value-row">
+          <span class="material-symbols-outlined value-icon">lock</span>
+          <div class="value-body">
+            <strong>No contracts. Cancel anytime.</strong>
+            <span>Month-to-month. If you don't see value in 30 days, you pay nothing more. No questions asked.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── PRICING ── -->
+  <section class="section">
+    <div class="container">
+      <p class="section-title">Simple pricing</p>
+      <p class="section-subtitle">One plan. Everything included. No surprises.</p>
+
+      <div class="pricing-card">
+        <p class="pricing-plan">Growth Plan</p>
+        <p class="pricing-price">$50</p>
+        <p class="pricing-period">per month · billed monthly</p>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li><span class="material-symbols-outlined">check</span> 4–6 AI-generated posts per week</li>
+          <li><span class="material-symbols-outlined">check</span> Instagram + Facebook publishing</li>
+          <li><span class="material-symbols-outlined">check</span> Automatic promotion sync from Workafé</li>
+          <li><span class="material-symbols-outlined">check</span> Simple weekly approval inbox</li>
+          <li><span class="material-symbols-outlined">check</span> Post scheduling at peak times</li>
+          <li><span class="material-symbols-outlined">check</span> Monthly performance report</li>
+          <li><span class="material-symbols-outlined">check</span> Free listing on Workafé included</li>
+        </ul>
+        <a href="#signup" class="btn btn-primary" style="text-decoration:none; width:100%; display:flex;">
+          <span class="material-symbols-outlined">rocket_launch</span>
+          Start Free for 14 Days
+        </a>
+      </div>
+      <p class="pricing-note">No credit card required to start. Questions? Email <a href="mailto:partners@workafe.panbuddha.ca">partners@workafe.panbuddha.ca</a></p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── FAQ ── -->
+  <section class="section">
+    <div class="container">
+      <p class="section-title">Common questions</p>
+      <p class="section-subtitle" style="margin-bottom:20px">Everything you need to know.</p>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q">Do I need to know anything about social media?</div>
+          <div class="faq-a">No. We handle everything — content creation, hashtag research, post scheduling, and publishing. You just review and approve in under 5 minutes per week.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What social media platforms are supported?</div>
+          <div class="faq-a">Instagram and Facebook are fully supported at launch. Twitter/X and Google Business Profile are coming in 2026.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Can I edit the content before it goes out?</div>
+          <div class="faq-a">Yes, always. You can approve, edit, or skip any post before it publishes. You're in full control of what goes live.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">How does the Workafé promotion sync work?</div>
+          <div class="faq-a">Any deal or perk you add to your Workafé listing is automatically detected by our AI and turned into a social post, scheduled for the same day. Your app promotions and social media stay in sync automatically.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What if I don't like the content quality?</div>
+          <div class="faq-a">Our AI is trained specifically for café and local business marketing. If something doesn't fit your voice, you edit it in one click — and our system learns your preferences over time.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Do I need to already be listed on Workafé?</div>
+          <div class="faq-a">No — signing up for AI Marketing automatically includes your free listing on the Workafé app. One step for both.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── SIGN UP FORM ── -->
+  <section class="signup-section" id="signup">
+    <h2>Get started today</h2>
+    <p>Tell us about your café. We'll be in touch within 24 hours to set everything up.</p>
+
+    <div id="signup-form-wrap">
+      <form id="signup-form" onsubmit="submitForm(event)">
+        <div class="form-group">
+          <label class="form-label">Your name</label>
+          <input class="form-input" type="text" placeholder="Jane Smith" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Café name</label>
+          <input class="form-input" type="text" placeholder="The Daily Roast" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email address</label>
+          <input class="form-input" type="email" placeholder="jane@yourdailyroast.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Business type</label>
+          <select class="form-select" required>
+            <option value="" disabled selected>Select type</option>
+            <option>Café</option>
+            <option>Coffee shop</option>
+            <option>Bakery café</option>
+            <option>Coworking café</option>
+            <option>Restaurant with café area</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">What makes your place special? (optional)</label>
+          <textarea class="form-textarea" placeholder="e.g. Best espresso in Kitsilano, super quiet in the mornings, great natural light..."></textarea>
+        </div>
+        <button class="form-submit" type="submit" id="submit-btn">
+          Start My Free Trial →
+        </button>
+      </form>
+
+      <div class="form-success" id="form-success">
+        <span class="material-symbols-outlined success-icon">celebration</span>
+        <h3>You're on the list!</h3>
+        <p>We'll reach out within 24 hours to get your café set up. Welcome to Workafé AI Marketing.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="footer-brand">Workafé</div>
+    <div class="footer-co">PANBUDDHA DIGITAL SOLUTIONS LIMITED</div>
+    <div class="footer-links">
+      <a href="/terms.html">Terms</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="mailto:partners@workafe.panbuddha.ca">Contact</a>
+      <a href="/">User App</a>
+    </div>
+    <div class="footer-copy">© 2026 PANBUDDHA DIGITAL SOLUTIONS LIMITED. All rights reserved.</div>
+  </footer>
+
+  <script>
+    // ── FAQ accordion
+    document.querySelectorAll('.faq-q').forEach(q => {
+      q.addEventListener('click', () => {
+        const item = q.closest('.faq-item');
+        const wasOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!wasOpen) item.classList.add('open');
+      });
+    });
+
+    // ── AI preview button interactions (demo)
+    document.querySelector('.ai-action-approve').addEventListener('click', function() {
+      this.innerHTML = '<span class="material-symbols-outlined">check_circle</span> Approved!';
+      this.style.opacity = '0.6'; this.disabled = true;
+    });
+    document.querySelector('.ai-action-edit').addEventListener('click', function() {
+      const caption = document.getElementById('ai-caption');
+      caption.contentEditable = 'true';
+      caption.focus();
+      caption.style.outline = '1.5px solid var(--primary)';
+      caption.style.borderRadius = '6px';
+      caption.style.padding = '8px';
+      this.innerHTML = '<span class="material-symbols-outlined">save</span> Save';
+      this.addEventListener('click', () => {
+        caption.contentEditable = 'false';
+        caption.style.outline = 'none';
+      }, { once: true });
+    });
+
+    // ── Form submit (UI only for V1 — sends to mailto as lead capture)
+    function submitForm(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submit-btn');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      // Collect data
+      const form = document.getElementById('signup-form');
+      const inputs = form.querySelectorAll('input, select, textarea');
+      const name    = inputs[0].value;
+      const cafe    = inputs[1].value;
+      const email   = inputs[2].value;
+      const type    = inputs[3].value;
+      const special = inputs[4].value;
+
+      // Open mailto as lead notification (V1 — no backend needed)
+      const subject = encodeURIComponent(`AI Marketing Lead: ${cafe}`);
+      const body = encodeURIComponent(
+        `New AI Marketing signup:\n\nName: ${name}\nCafé: ${cafe}\nEmail: ${email}\nType: ${type}\nSpecial: ${special || 'N/A'}`
+      );
+      window.location.href = `mailto:partners@workafe.panbuddha.ca?subject=${subject}&body=${body}`;
+
+      // Show success regardless
+      setTimeout(() => {
+        document.getElementById('signup-form').style.display = 'none';
+        document.getElementById('form-success').style.display = 'block';
+      }, 600);
+    }
+
+    // ── Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+</body>
+</html>
