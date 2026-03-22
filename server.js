@@ -17,6 +17,21 @@ app.use('/api/events', require('./routes/events'));
 app.use('/api/purchase', require('./routes/purchase'));
 app.use('/api/health', (req, res) => res.json({ status: 'ok', app: 'Workafe' }));
 
+// ── Merchant Config API ───────────────────────────
+// Exposes the category registry as JSON for external consumers (mobile app, website, AI engine)
+app.get('/api/merchant-config', (req, res) => {
+  try {
+    const config = require('./data/merchant-config.js');
+    res.json({
+      business_types: config.BUSINESS_TYPES,
+      browse_categories: config.BROWSE_CATEGORIES,
+      tags: config.TAGS,
+    });
+  } catch (e) {
+    res.status(500).json({ error: 'Config not available' });
+  }
+});
+
 // ── Static HTML pages (before SPA fallback) ──────
 app.get('/welcome', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'welcome.html'));

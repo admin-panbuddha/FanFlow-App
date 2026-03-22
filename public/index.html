@@ -135,14 +135,8 @@
 
     <div id="map-container" class="map-container"></div>
 
-    <!-- Map filter chips -->
-    <div class="map-filters" id="map-filters">
-      <button class="chip active" data-filter="all">All</button>
-      <button class="chip" data-filter="food">Food</button>
-      <button class="chip" data-filter="drinks">Drinks</button>
-      <button class="chip" data-filter="activities">Activities</button>
-      <button class="chip" data-filter="shopping">Shopping</button>
-    </div>
+    <!-- Map filter chips — populated by buildFilterTabs() from merchant-config.js -->
+    <div class="map-filters" id="map-filters"></div>
 
     <!-- Map deal preview card (shows when pin tapped) -->
     <div class="map-preview-card" id="map-preview" style="display:none">
@@ -195,29 +189,8 @@
       </div>
     </nav>
 
-    <!-- Category filter tabs -->
-    <nav class="tab-bar" id="tab-bar">
-      <button class="tab-btn active" data-tab="all">
-        <span class="material-symbols-outlined">explore</span>
-        <span class="tab-label">All</span>
-      </button>
-      <button class="tab-btn" data-tab="food">
-        <span class="material-symbols-outlined">restaurant</span>
-        <span class="tab-label">Food</span>
-      </button>
-      <button class="tab-btn" data-tab="drinks">
-        <span class="material-symbols-outlined">local_bar</span>
-        <span class="tab-label">Drinks</span>
-      </button>
-      <button class="tab-btn" data-tab="activities">
-        <span class="material-symbols-outlined">celebration</span>
-        <span class="tab-label">Activities</span>
-      </button>
-      <button class="tab-btn" data-tab="shopping">
-        <span class="material-symbols-outlined">shopping_bag</span>
-        <span class="tab-label">Shopping</span>
-      </button>
-    </nav>
+    <!-- Category filter tabs — populated by buildFilterTabs() from merchant-config.js -->
+    <nav class="tab-bar" id="tab-bar"></nav>
 
     <div class="deals-content" id="deals-content">
       <!-- Populated by JS -->
@@ -449,6 +422,8 @@
   <!-- Toast container -->
   <div class="toast-container" id="toast-container"></div>
 
+  <!-- Merchant config must load before app.js so MERCHANT_CONFIG is available -->
+  <script src="/data/merchant-config.js"></script>
   <script src="/js/app.js"></script>
 </body>
 </html>

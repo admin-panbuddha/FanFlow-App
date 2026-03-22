@@ -1,7 +1,71 @@
 /* ═══════════════════════════════════════════════════════════════
-   WORKAFÉ — Find Your Perfect Work Café
-   Views: Home | Map | Cafés | Detail | Success | Saved | Rewards
+   WORKAFÉ — Local Business Discovery + Growth Platform
+   Views: Home | Map | Discover | Detail | Success | Saved | Rewards
+
+   CATEGORY SYSTEM: Config-driven via window.MERCHANT_CONFIG
+   To add a new browse category → edit data/merchant-config.js only.
    ═══════════════════════════════════════════════════════════════ */
+
+// ── CATEGORY CONFIG (loaded from merchant-config.js via <script>) ─
+// Falls back to safe defaults if config file not loaded yet.
+function getBrowseCategories() {
+  if (window.MERCHANT_CONFIG && window.MERCHANT_CONFIG.BROWSE_CATEGORIES) {
+    return window.MERCHANT_CONFIG.BROWSE_CATEGORIES;
+  }
+  // Safe fallback — matches the default config
+  return [
+    { id: 'all',        label: 'All',        icon: 'explore',       color: '#C8956C', filter_all: true },
+    { id: 'food',       label: 'Food',       icon: 'restaurant',    color: '#D4645A' },
+    { id: 'drinks',     label: 'Drinks',     icon: 'local_cafe',    color: '#C8956C' },
+    { id: 'activities', label: 'Activities', icon: 'celebration',   color: '#4A8C6A' },
+    { id: 'shopping',   label: 'Shopping',   icon: 'shopping_bag',  color: '#D4A853' },
+  ];
+}
+
+function getCategoryColor(categoryId) {
+  const cat = getBrowseCategories().find(c => c.id === categoryId);
+  return cat ? cat.color : '#C8956C';
+}
+
+function getBusinessTypeLabel(businessTypeId) {
+  if (!window.MERCHANT_CONFIG) return businessTypeId || 'Business';
+  const bt = window.MERCHANT_CONFIG.BUSINESS_TYPES.find(b => b.id === businessTypeId);
+  return bt ? bt.label : businessTypeId || 'Business';
+}
+
+// Dynamically build filter tabs from config (called once on init)
+function buildFilterTabs() {
+  const categories = getBrowseCategories();
+
+  // ── Map filter chips
+  const mapFilters = document.getElementById('map-filters');
+  if (mapFilters) {
+    mapFilters.innerHTML = categories.map(cat => `
+      <button class="chip${cat.filter_all ? ' active' : ''}" data-filter="${cat.id}">${cat.label}</button>
+    `).join('');
+  }
+
+  // ── Deals tab bar
+  const tabBar = document.getElementById('tab-bar');
+  if (tabBar) {
+    tabBar.innerHTML = categories.map(cat => `
+      <button class="tab-btn${cat.filter_all ? ' active' : ''}" data-tab="${cat.id}">
+        <span class="material-symbols-outlined">${cat.icon}</span>
+        <span class="tab-label">${cat.label}</span>
+      </button>
+    `).join('');
+
+    // Re-attach tab click handlers after rebuilding
+    tabBar.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBar.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentTab = btn.dataset.tab;
+        renderDealsTab(currentTab);
+      });
+    });
+  }
+}
 
 // ── STATE ─────────────────────────────────────────────────────
 let currentEvent = null;
@@ -298,17 +362,10 @@ function plotDealsOnMap(deals) {
   mapMarkers.forEach(m => leafletMap.removeLayer(m));
   mapMarkers = [];
 
-  const categoryColors = {
-    food: '#D4645A',
-    drinks: '#C8956C',
-    activities: '#4A8C6A',
-    shopping: '#D4A853'
-  };
-
   deals.forEach(deal => {
     if (!deal.coords) return;
 
-    const color = categoryColors[deal.category] || '#C8956C';
+    const color = getCategoryColor(deal.category);
     const marker = L.marker([deal.coords.lat, deal.coords.lng], {
       icon: L.divIcon({
         className: 'deal-marker',
@@ -776,6 +833,9 @@ async function renderNotifications() {
 // ═══════════════════════════════════════════════════════════════
 
 document.addEventListener('DOMContentLoaded', () => {
+  // ── Build filter tabs from config (category-scalable)
+  buildFilterTabs();
+
   // Bottom nav
   $$('.bottom-nav-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -788,15 +848,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Tab bar (deals view)
-  $$('#tab-bar .tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const tab = btn.dataset.tab;
-      currentTab = tab;
-      $$('#tab-bar .tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
-      renderDealsTab(tab);
-    });
-  });
+  // Note: Tab bar click handlers are attached inside buildFilterTabs() above.
 
   // Saved view tabs
   $$('.saved-tab-btn').forEach(btn => {
